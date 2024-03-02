@@ -47,7 +47,7 @@ while (true)
 
         Console.WriteLine("You have successfully signed up with Mo's Bank!");
     }
-    else if (userInput == "1")
+    else if (userInput == "q")
     {
         Console.WriteLine("""
         **- QUIT -**
