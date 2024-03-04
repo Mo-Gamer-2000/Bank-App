@@ -1,8 +1,8 @@
 ﻿class User
 {
     public string Name { get; set; }
-    public string email { get; set; }
-    public string password { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
 }
 
 class Program
@@ -34,20 +34,28 @@ class Program
                 """);
 
                 Console.Write("Name: ");
-                string? userName = Console.ReadLine();
+                string? signInName = Console.ReadLine();
 
                 Console.Write("Password: ");
-                string? userPassword = Console.ReadLine();
+                string? signInPassword = Console.ReadLine();
 
-                Console.WriteLine($"Username: {userName}");
-                Console.WriteLine($"Password: {userPassword}");
+                User loggedInUser = users.Find(user => user.Name == signInName && user.Password == signInPassword);
+
+                if (loggedInUser != null)
+                {
+                    Console.WriteLine($"Welcome back, {loggedInUser.Name}!");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid username and password. Please try again.");
+                }
             }
             else if (userInput == "2")
             {
                 Console.WriteLine("""
-        **- SIGN UP -**
-        Please, enter your name, email and password:
-        """);
+                **- SIGN UP -**
+                Please, enter your name, email and password:
+                """);
 
                 Console.Write("Name: ");
                 string? userName = Console.ReadLine();
@@ -58,14 +66,17 @@ class Program
                 Console.Write("Password: ");
                 string? userPassword = Console.ReadLine();
 
+                User newUser = new User { Name = userName, Email = userEmail, Password = userPassword };
+                users.Add(newUser);
+
                 Console.WriteLine("You have successfully signed up with Mo's Bank!");
             }
             else if (userInput == "q")
             {
                 Console.WriteLine("""
-        **- QUIT -**
-        Thank you for using Mo's banking!
-        """);
+                **- QUIT -**
+                Thank you for using Mo's banking!
+                """);
                 break;
             }
             else
