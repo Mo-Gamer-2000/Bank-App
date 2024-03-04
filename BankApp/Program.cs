@@ -1,8 +1,8 @@
 ﻿class User
 {
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
+    public string? Name { get; set; }
+    public string? Email { get; set; }
+    public string? Password { get; set; }
 }
 
 class Program
@@ -48,7 +48,7 @@ class Program
                     signInPassword = Console.ReadLine();
                 }
 
-                User loggedInUser = users.Find(user => user.Name == signInName && user.Password == signInPassword);
+                User loggedInUser = users.Find(user => user.Name == signInName && user.Password == signInPassword) ?? new User();
 
                 if (loggedInUser != null)
                 {
