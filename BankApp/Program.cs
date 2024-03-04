@@ -33,11 +33,20 @@ class Program
                 Please, enter your name and password:
                 """);
 
-                Console.Write("Name: ");
-                string? signInName = Console.ReadLine();
+                string? signInName = null;
+                string? signInPassword = null;
 
-                Console.Write("Password: ");
-                string? signInPassword = Console.ReadLine();
+                while (string.IsNullOrEmpty(signInName))
+                {
+                    Console.Write("Name: ");
+                    signInName = Console.ReadLine();
+                }
+
+                while (string.IsNullOrEmpty(signInPassword))
+                {
+                    Console.Write("Password: ");
+                    signInPassword = Console.ReadLine();
+                }
 
                 User loggedInUser = users.Find(user => user.Name == signInName && user.Password == signInPassword);
 
@@ -57,14 +66,27 @@ class Program
                 Please, enter your name, email and password:
                 """);
 
-                Console.Write("Name: ");
-                string? userName = Console.ReadLine();
+                string? userName = null;
+                string? userEmail = null;
+                string? userPassword = null;
 
-                Console.Write("Email: ");
-                string? userEmail = Console.ReadLine();
+                while (string.IsNullOrEmpty(userName))
+                {
+                    Console.Write("Name: ");
+                    userName = Console.ReadLine();
+                }
 
-                Console.Write("Password: ");
-                string? userPassword = Console.ReadLine();
+                while (string.IsNullOrEmpty(userEmail))
+                {
+                    Console.Write("Email: ");
+                    userEmail = Console.ReadLine();
+                }
+
+                while (string.IsNullOrEmpty(userPassword))
+                {
+                    Console.Write("Password: ");
+                    userPassword = Console.ReadLine();
+                }
 
                 User newUser = new User { Name = userName, Email = userEmail, Password = userPassword };
                 users.Add(newUser);
