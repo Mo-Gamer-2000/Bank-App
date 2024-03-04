@@ -48,7 +48,7 @@ class Program
                     signInPassword = Console.ReadLine();
                 }
 
-                User loggedInUser = users.Find(user => user.Name == signInName && user.Password == signInPassword) ?? new User();
+                User loggedInUser = users.Find(user => user.Name == signInName && user.Password == signInPassword);
 
                 if (loggedInUser != null)
                 {
@@ -70,20 +70,26 @@ class Program
                 string? userEmail = null;
                 string? userPassword = null;
 
-                while (string.IsNullOrEmpty(userName))
+                // Validate name
+                while (string.IsNullOrEmpty(userName) || userName.Length < 3 || !userName.All(char.IsLetter))
                 {
+                    Console.WriteLine("Name must be at least 3 characters long and contain only letters.");
                     Console.Write("Name: ");
                     userName = Console.ReadLine();
                 }
 
-                while (string.IsNullOrEmpty(userEmail))
+                // Validate email
+                while (string.IsNullOrEmpty(userEmail) || !IsValidEmail(userEmail))
                 {
+                    Console.WriteLine("Please enter a valid email address.");
                     Console.Write("Email: ");
                     userEmail = Console.ReadLine();
                 }
 
-                while (string.IsNullOrEmpty(userPassword))
+                // Validate password
+                while (string.IsNullOrEmpty(userPassword) || userPassword.Length < 6)
                 {
+                    Console.WriteLine("Password must be at least 6 characters long.");
                     Console.Write("Password: ");
                     userPassword = Console.ReadLine();
                 }
@@ -92,6 +98,19 @@ class Program
                 users.Add(newUser);
 
                 Console.WriteLine("You have successfully signed up with Mo's Bank!");
+
+                // Email validation method
+                bool IsValidEmail(string email)
+                {
+                    try
+                    {
+                        var addr = new System.Net.Mail.MailAddress(email);
+                        return addr.Address == email && (email.Contains("@gmail.com") || email.Contains("@yahoo.com") || email.Contains("@outlook.com"));
+                    } catch
+                    {
+                        return false;
+                    }
+                }
             }
             else if (userInput == "q")
             {
