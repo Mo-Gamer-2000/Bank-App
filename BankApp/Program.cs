@@ -4,7 +4,6 @@
     public string? Email { get; set; }
     public string? Password { get; set; }
 }
-
 class Program
 {
     static void Main(string[] args)
@@ -29,23 +28,37 @@ class Program
             if (userInput == "1")
             {
                 Console.WriteLine("""
-                **- SIGN IN -**
-                Please, enter your name and password:
-                """);
+    **- SIGN IN -**
+    Please, enter your name and password:
+    """);
 
                 string? signInName = null;
                 string? signInPassword = null;
 
-                while (string.IsNullOrEmpty(signInName))
+                // Validate name - UPDATED this after the lesson, storing condition in a var
+                var validateSignInNameCondition = (string.IsNullOrEmpty(signInName) || signInName.Length < 3 || !signInName.All(char.IsLetter));
+
+                while (validateSignInNameCondition)
                 {
+                    Console.WriteLine("Name must be at least 3 characters long and contain only letters.");
                     Console.Write("Name: ");
                     signInName = Console.ReadLine();
+
+                    // Update the condition after user input
+                    validateSignInNameCondition = string.IsNullOrEmpty(signInName) || signInName.Length < 3 || !signInName.All(char.IsLetter);
                 }
 
-                while (string.IsNullOrEmpty(signInPassword))
+                // Validate password - UPDATED this after the lesson, storing condition in a var
+                var validateSignInPasswordCondition = (string.IsNullOrEmpty(signInPassword) || signInPassword.Length < 6);
+
+                while (validateSignInPasswordCondition)
                 {
+                    Console.WriteLine("Password must be at least 6 characters long.");
                     Console.Write("Password: ");
                     signInPassword = Console.ReadLine();
+
+                    // Update the condition after user input
+                    validateSignInPasswordCondition = string.IsNullOrEmpty(signInPassword) || signInPassword.Length < 6;
                 }
 
                 User loggedInUser = users.Find(user => user.Name == signInName && user.Password == signInPassword);
@@ -56,7 +69,7 @@ class Program
                 }
                 else
                 {
-                    Console.WriteLine("Invalid username and password. Please try again.");
+                    Console.WriteLine("Invalid username or password. Please try again.");
                 }
             }
             else if (userInput == "2")
@@ -70,28 +83,41 @@ class Program
                 string? userEmail = null;
                 string? userPassword = null;
 
-                // Validate name
-                while (string.IsNullOrEmpty(userName) || userName.Length < 3 || !userName.All(char.IsLetter))
+                // Validate name - UPDATED this after the lesson, storing condition in a var
+                var validateNameCondition = (string.IsNullOrEmpty(userName) || userName.Length < 3 || !userName.All(char.IsLetter));
+
+                while (validateNameCondition)
                 {
                     Console.WriteLine("Name must be at least 3 characters long and contain only letters.");
                     Console.Write("Name: ");
                     userName = Console.ReadLine();
+
+                    // Update the condition after user input
+                    validateNameCondition = string.IsNullOrEmpty(userName) || userName.Length < 3 || !userName.All(char.IsLetter);
                 }
 
-                // Validate email
-                while (string.IsNullOrEmpty(userEmail) || !IsValidEmail(userEmail))
+                // Validate email - UPDATED this after the lesson, storing condition in a var
+                var validateEmailCondition = (string.IsNullOrEmpty(userEmail) || !IsValidEmail(userEmail));
+                while (validateEmailCondition)
                 {
                     Console.WriteLine("Please enter a valid email address.");
                     Console.Write("Email: ");
                     userEmail = Console.ReadLine();
+
+                    // Update the condition after user input
+                    validateEmailCondition = string.IsNullOrEmpty(userEmail) || !IsValidEmail(userEmail);
                 }
 
-                // Validate password
-                while (string.IsNullOrEmpty(userPassword) || userPassword.Length < 6)
+                // Validate password - UPDATED this after the lesson, storing condition in a var
+                var validatePasswordCondition = (string.IsNullOrEmpty(userPassword) || userPassword.Length < 6);
+                while (validatePasswordCondition)
                 {
                     Console.WriteLine("Password must be at least 6 characters long.");
                     Console.Write("Password: ");
                     userPassword = Console.ReadLine();
+
+                    // Update the condition after user input
+                    validatePasswordCondition = string.IsNullOrEmpty(userPassword) || userPassword.Length < 6;
                 }
 
                 User newUser = new User { Name = userName, Email = userEmail, Password = userPassword };
