@@ -28,16 +28,21 @@ class Program
             if (userInput == "1")
             {
                 Console.WriteLine("""
-    **- SIGN IN -**
-    Please, enter your name and password:
-    """);
+                **- SIGN IN -**
+                Please, enter your name and password:
+                """);
 
                 string? signInName = null;
                 string? signInPassword = null;
 
                 // Validate name - UPDATED this after the lesson, storing condition in a var
                 var validateSignInNameCondition = (string.IsNullOrEmpty(signInName) || signInName.Length < 3 || !signInName.All(char.IsLetter));
-
+                /*
+                 * I have used while loop acorss my appliation, because it allows the application to repeatedly prompt the User
+                 * until they have provided a valid input.
+                 * 
+                 * -- Could have used: Do-While Loop --
+                 */
                 while (validateSignInNameCondition)
                 {
                     Console.WriteLine("Name must be at least 3 characters long and contain only letters.");
