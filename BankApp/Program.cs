@@ -1,9 +1,6 @@
-﻿class User
-{
-    public string? Name { get; set; }
-    public string? Email { get; set; }
-    public string? Password { get; set; }
-}
+﻿using BankApp;
+using System.Text.RegularExpressions;
+
 class Program
 {
     static void Main(string[] args)
@@ -54,16 +51,16 @@ class Program
                 }
 
                 // Validate password - UPDATED this after the lesson, storing condition in a var
-                var validateSignInPasswordCondition = (string.IsNullOrEmpty(signInPassword) || signInPassword.Length < 6);
+                var validateSignInPasswordCondition = (string.IsNullOrEmpty(signInPassword) || signInPassword.Length < 6 || !Regex.IsMatch(signInPassword, @"^[0-9]+$"));
 
                 while (validateSignInPasswordCondition)
                 {
-                    Console.WriteLine("Password must be at least 6 characters long.");
+                    Console.WriteLine("Password must be at least 6 characters long and contain only integers.");
                     Console.Write("Password: ");
                     signInPassword = Console.ReadLine();
 
                     // Update the condition after user input
-                    validateSignInPasswordCondition = string.IsNullOrEmpty(signInPassword) || signInPassword.Length < 6;
+                    validateSignInPasswordCondition = string.IsNullOrEmpty(signInPassword) || signInPassword.Length < 6 || !Regex.IsMatch(signInPassword, @"^[0-9]+$");
                 }
 
                 User loggedInUser = users.Find(user => user.Name == signInName && user.Password == signInPassword);
@@ -75,12 +72,13 @@ class Program
                 else
                 {
                     Console.WriteLine("Invalid username or password. Please try again.");
+
                 }
             }
             else if (userInput == "2")
             {
                 Console.WriteLine("""
-                **- SIGN UP -**
+                * *- SIGN UP -**
                 Please, enter your name, email and password:
                 """);
 
@@ -114,15 +112,16 @@ class Program
                 }
 
                 // Validate password - UPDATED this after the lesson, storing condition in a var
-                var validatePasswordCondition = (string.IsNullOrEmpty(userPassword) || userPassword.Length < 6);
+                var validatePasswordCondition = (string.IsNullOrEmpty(userPassword) || userPassword.Length < 6 || !Regex.IsMatch(userPassword, @"^[0-9]+$"));
+
                 while (validatePasswordCondition)
                 {
-                    Console.WriteLine("Password must be at least 6 characters long.");
+                    Console.WriteLine("Password must be at least 6 characters long and contain only integers.");
                     Console.Write("Password: ");
                     userPassword = Console.ReadLine();
 
                     // Update the condition after user input
-                    validatePasswordCondition = string.IsNullOrEmpty(userPassword) || userPassword.Length < 6;
+                    validatePasswordCondition = string.IsNullOrEmpty(userPassword) || userPassword.Length < 6 || !Regex.IsMatch(userPassword, @"^[0-9]+$");
                 }
 
                 User newUser = new User { Name = userName, Email = userEmail, Password = userPassword };
@@ -136,7 +135,7 @@ class Program
                     try
                     {
                         var addr = new System.Net.Mail.MailAddress(email);
-                        return addr.Address == email && (email.Contains("@gmail.com") || email.Contains("@yahoo.com") || email.Contains("@outlook.com"));
+                        return addr.Address == email && (email.Contains("@gmail.com") || email.Contains("@hotmail.com") || email.Contains("@yahoo.com") || email.Contains("@outlook.com"));
                     } catch
                     {
                         return false;
@@ -146,7 +145,7 @@ class Program
             else if (userInput == "q")
             {
                 Console.WriteLine("""
-                **- QUIT -**
+                * *- QUIT -**
                 Thank you for using Mo's banking!
                 """);
                 break;
